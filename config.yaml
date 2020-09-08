@@ -2,7 +2,7 @@ baseurl: 'https://hyy313.github.io/'
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
-title: Example Site
+title: hyy space
 permalinks:
   post: '/p/:slug/'
   page: '/:slug/'
@@ -12,8 +12,8 @@ params:
   favicon: ''
   sidebar:
     emoji: "\U0001F365"
-    avatar: img/avatar.png
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    avatar: img/hhh.jpg
+    subtitle: 'code'
   article:
     license:
       enabled: true
