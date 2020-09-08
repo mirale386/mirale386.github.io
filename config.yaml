@@ -1,0 +1,59 @@
+baseurl: 'https://example.com/'
+languageCode: en-us
+theme: hugo-theme-stack
+paginate: 5
+title: Example Site
+permalinks:
+  post: '/p/:slug/'
+  page: '/:slug/'
+params:
+  mainSections:
+    - post
+  favicon: ''
+  sidebar:
+    emoji: "\U0001F365"
+    avatar: img/avatar.png
+    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+  article:
+    license:
+      enabled: true
+      default: Licenced under CC BY-NC-SA 4.0
+  widgets:
+    enabled:
+      - archive
+      - tag-cloud
+    archive:
+      limit: 5
+      path: archive
+    tagCloud:
+      limit: 10
+  opengraph:
+    defaultImage: ''
+    twitter:
+      site: ''
+menu:
+  main:
+    - identifier: home
+      name: Home
+      url: /
+      weight: -100
+      pre: home
+    - identifier: about-cn
+      name: About
+      url: /about/
+      weight: -90
+      pre: user
+    - identifier: archive
+      name: Archive
+      url: /archive/
+      weight: -70
+      pre: archive
+related:
+  includeNewer: true
+  threshold: 60
+  toLower: false
+  indices:
+    - name: tags
+      weight: 100
+    - name: categories
+      weight: 200
