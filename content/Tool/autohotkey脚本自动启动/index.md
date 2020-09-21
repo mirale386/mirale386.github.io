@@ -3,12 +3,10 @@ author: mirale
 title: autohotkey auto run
 date: 2020-09-21
 description: A brief guide to setup autohotkey
-categories = [
-    "Tool"
-]
-tags = [
-    "win",
-]
+categories:
+  - Tool
+tags:
+  - win
 ---
 
 1. 找到脚本文件后选中它, 接着按下 Control-C.
