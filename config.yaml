@@ -12,8 +12,8 @@ params:
   favicon: ''
   sidebar:
     emoji: "\U0001F365"
-    avatar: img/hhh.jpg
-    subtitle: 'code'
+    avatar: img/hhh1.jpg
+    subtitle: 'code make happy'
   article:
     license:
       enabled: true
