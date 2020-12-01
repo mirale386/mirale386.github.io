@@ -10,4 +10,5 @@ git clone https://github.com/denysdovhan/spaceship-prompt.git &amp;#34;$ZSH_CUST
 zsh插件
 incr
 git clone git://github.com/makeitjoe/incr.zsh $ZSH_CUSTOM/plugins/incr .zshrc中增加plugins(incr)
-最后别忘了source .zshrc激活配置，字体需要重新开一个terminal即可生效。</description></item></channel></rss>
+最后别忘了source .zshrc激活配置，字体需要重新开一个terminal即可生效。</description></item><item><title>毕设环境</title><link>https://hyy313.github.io/p/%E6%AF%95%E8%AE%BE%E7%8E%AF%E5%A2%83/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E6%AF%95%E8%AE%BE%E7%8E%AF%E5%A2%83/</guid><description>scala 安装jdk sudo apt-get install openjdk-8-jdk java -version 安装scala sudo apt-get install scala # 进入scala环境 scala chisel 安装sbt echo &amp;#34;deb https://dl.bintray.com/sbt/debian /&amp;#34; | sudo tee -a /etc/apt/sources.list.d/sbt.list curl -sL &amp;#34;https://keyserver.ubuntu.com/pks/lookup?op=get&amp;amp;search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823&amp;#34; | sudo apt-key add sudo apt-get update sudo apt-get install sbtsbt sbt sbtVersion 安装verilator sudo apt-get install verilator verilator -version 下载chisel-template git clone https://github.com/freechipsproject/chisel-template 后续步骤可选：
+安装Firrtl git clone https://github.com/freechipsproject/firrtl.git &amp;amp;&amp;amp; cd firrtl sbt compile sbt test sbt assembly sbt publishLocal cd ~/.</description></item></channel></rss>
