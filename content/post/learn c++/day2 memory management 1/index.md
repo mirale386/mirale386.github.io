@@ -17,10 +17,10 @@ tags:
 
 c++程序有四种方式使用内存：
     
-    1. c++ libarary（比如标准库）；
-    2. c++ primitives（new,new[],new(),::operator new(),...）；
-    3. CRT malloc/free；
-    4. OS API。
+1. c++ libarary（比如标准库）；
+2. c++ primitives（new,new[],new(),::operator new(),...）；
+3. CRT malloc/free；
+4. OS API。
 
 ![avatar](memory_case.jpg)
 
@@ -30,10 +30,10 @@ c++程序有四种方式使用内存：
 
 new expression具体执行流程：
 
-    1. 首先调用`operator new()`，申请空间
-    2. 申请空间，再去调用malloc分配内存
-    3. 对申请的内存进行转换，以便初始化
-    4. 通过`placement new()`进行初始化
+1. 首先调用`operator new()`，申请空间
+2. 申请空间，再去调用malloc分配内存
+3. 对申请的内存进行转换，以便初始化
+4. 通过`placement new()`进行初始化
 
 - 注：
 
@@ -43,9 +43,9 @@ new expression具体执行流程：
 
 delete expression流程：
 
-    1. 首先调用析构函数
-    2. 接着`operator delete`
-    3. 再调用free释放内存
+1. 首先调用析构函数
+2. 接着`operator delete`
+3. 再调用free释放内存
 
 ## array new, array delete
 
@@ -87,7 +87,7 @@ delete expression流程：
 
 如最开始所说，c++应用程序分配内存的方式可以由上往下一步一步调用：new/delete->operator new/delete()->局部/全局 oprator new/delete()->malloc/free;或者直接使用malloc/free。
 
-另外一种是通过容器allocator，调用或使用内存池调用::operator new/delete()，在调用malloc/free进行分配。
+另外一种是通过容器allocator，调用或使用内存池调用::operator new/delete()，再调用malloc/free进行分配。
 
 # 内存管理的终极目的
 
