@@ -1,7 +1,7 @@
 ---
 author: mirale
 title: ubuntu clash config
-date: 2020-11-30
+date: 2020-12-1
 description: A guide to use clash on ubuntu
 categories:
   - clash
@@ -11,7 +11,7 @@ tags:
 
 ***参考：***
 
-一片非常好的Ubuntu配置文章：
+一篇非常好的Ubuntu配置文章：
 https://juejin.cn/post/6844904149822210056#heading-18
 
 自动脚本：
@@ -24,10 +24,13 @@ https://github.com/Dreamacro/clash/releases下载最新amd64.gz包
 # 安装clash
 
 ```bash
+# 解压
 gzip clash-linux-amd64-version.gz -d
 
+# 拷贝到可执行目录下
 sudo mv clash-linux-amd64-version.gz /usr/local/bin/clash
 
+# 赋予执行权限
 sudo chmod +x /usr/local/bin/clash
 ```
 
