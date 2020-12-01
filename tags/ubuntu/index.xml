@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ubuntu on hyy space</title><link>https://hyy313.github.io/tags/ubuntu/</link><description>Recent content in ubuntu on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml"/><item><title>ubuntu 安装 docker</title><link>https://hyy313.github.io/p/ubuntu-%E5%AE%89%E8%A3%85-docker/</link><pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/ubuntu-%E5%AE%89%E8%A3%85-docker/</guid><description>1.通过脚本安装，配置镜像阿里云 curl &amp;#34;https://get.docker.com&amp;#34; -o docker.sh sh docker.sh --mirror Aliyun 2.非root用户需要配置用户组(需log out) sudo usermod -aG docker yourUsername 3.启动docker service docker start</description></item><item><title>ubuntu clash config</title><link>https://hyy313.github.io/p/ubuntu-clash-config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/ubuntu-clash-config/</guid><description>参考：
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ubuntu on hyy space</title><link>https://hyy313.github.io/tags/ubuntu/</link><description>Recent content in ubuntu on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml"/><item><title>bash config</title><link>https://hyy313.github.io/p/bash-config/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/bash-config/</guid><description>zsh 安装zsh
+sudo apt-get install zsh 安装ohmyzsh
+sh -c &amp;#34;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;#34; 配置ohmyzsh
+zsh字体:fonts-powerline
+sudo apt-get install fonts-powerline zsh主题
+agnoster
+修改.zshrc中ZSH_THEME=&amp;quot;agnoster&amp;rdquo;
+spaceship
+git clone https://github.com/denysdovhan/spaceship-prompt.git &amp;#34;$ZSH_CUSTOM/themes/spaceship-prompt&amp;#34; --depth=1 ln -s &amp;#34;$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme&amp;#34; &amp;#34;$ZSH_CUSTOM/themes/spaceship.zsh-theme&amp;#34; 修改.zshrc中ZSH_THEME=&amp;quot;spaceship&amp;rdquo;
+zsh插件
+incr
+git clone git://github.com/makeitjoe/incr.zsh $ZSH_CUSTOM/plugins/incr .zshrc中增加plugins(incr)
+最后别忘了source .zshrc激活配置，字体需要重新开一个terminal即可生效。</description></item><item><title>ubuntu clash config</title><link>https://hyy313.github.io/p/ubuntu-clash-config/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/ubuntu-clash-config/</guid><description>参考：
 一篇非常好的Ubuntu配置文章： https://juejin.cn/post/6844904149822210056#heading-18
 自动脚本： https://akillcool.github.io/post/clash-with-auto-update-config/
 下载clash https://github.com/Dreamacro/clash/releases下载最新amd64.gz包
@@ -6,4 +18,4 @@
 类似脚本：
 # start-service.sh #!/bin/bash nohup clash exit 0 记得给脚本sudo chmod +x shname.sh加上执行权限
 将脚本加入start-up
-通过systemctl设置开机启动，启停。自动更新配置 注册服务 # edit and save this file to /usr/lib/systemd/system/clash.service [Unit] Description=clash After=network.target [Service] WorkingDirectory=&amp;#34;your home directory&amp;#34;/.</description></item></channel></rss>
+通过systemctl设置开机启动，启停。自动更新配置 注册服务 # edit and save this file to /usr/lib/systemd/system/clash.service [Unit] Description=clash After=network.target [Service] WorkingDirectory=&amp;#34;your home directory&amp;#34;/.</description></item><item><title>ubuntu 安装 docker</title><link>https://hyy313.github.io/p/ubuntu-%E5%AE%89%E8%A3%85-docker/</link><pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/ubuntu-%E5%AE%89%E8%A3%85-docker/</guid><description>1.通过脚本安装，配置镜像阿里云 curl &amp;#34;https://get.docker.com&amp;#34; -o docker.sh sh docker.sh --mirror Aliyun 2.非root用户需要配置用户组(需log out) sudo usermod -aG docker yourUsername 3.启动docker service docker start</description></item></channel></rss>

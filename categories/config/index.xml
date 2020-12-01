@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>config on hyy space</title><link>https://hyy313.github.io/categories/config/</link><description>Recent content in config on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/categories/config/index.xml" rel="self" type="application/rss+xml"/><item><title>bash config</title><link>https://hyy313.github.io/p/bash-config/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/bash-config/</guid><description>zsh 安装zsh
+sudo apt-get install zsh 安装ohmyzsh
+sh -c &amp;#34;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;#34; 配置ohmyzsh
+zsh字体:fonts-powerline
+sudo apt-get install fonts-powerline zsh主题
+agnoster
+修改.zshrc中ZSH_THEME=&amp;quot;agnoster&amp;rdquo;
+spaceship
+git clone https://github.com/denysdovhan/spaceship-prompt.git &amp;#34;$ZSH_CUSTOM/themes/spaceship-prompt&amp;#34; --depth=1 ln -s &amp;#34;$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme&amp;#34; &amp;#34;$ZSH_CUSTOM/themes/spaceship.zsh-theme&amp;#34; 修改.zshrc中ZSH_THEME=&amp;quot;spaceship&amp;rdquo;
+zsh插件
+incr
+git clone git://github.com/makeitjoe/incr.zsh $ZSH_CUSTOM/plugins/incr .zshrc中增加plugins(incr)
+最后别忘了source .zshrc激活配置，字体需要重新开一个terminal即可生效。</description></item></channel></rss>
