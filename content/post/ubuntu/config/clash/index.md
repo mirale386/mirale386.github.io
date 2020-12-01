@@ -1,7 +1,7 @@
 ---
 author: mirale
 title: ubuntu clash config
-date: 2020-12-1
+date: 2020-12-01
 description: A guide to use clash on ubuntu
 categories:
   - clash
@@ -100,7 +100,7 @@ else
     TIME=`date '+%Y-%m-%d %H:%M:%S'`
     cp ${HOME}/.config/clash/config.yaml "${HOME}/.config/clash/config.yaml.bak${TIME}"
     curl -L -o ${HOME}/.config/clash/config.yaml ${CLASH_URL}
-    /usr/bin/clash
+    /usr/local/bin/clash
 fi
 ```
 
