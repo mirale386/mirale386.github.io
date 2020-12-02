@@ -2,7 +2,7 @@
 author: mirale
 title: 重新学c++ day1 c++ 类大小和默认函数
 date: 2020-11-30
-description: A brief guide to class constructor and size
+description: default class constructor and size
 categories:
   - c++
 tags:

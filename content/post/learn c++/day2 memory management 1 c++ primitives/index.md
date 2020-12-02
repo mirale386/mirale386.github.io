@@ -2,7 +2,7 @@
 author: mirale
 title: 重新学c++ day2 内存管理 c++ primitives
 date: 2020-12-01
-description: A config to use ubuntu better
+description: memory management - c++ primitives
 categories:
   - c++
 tags:
