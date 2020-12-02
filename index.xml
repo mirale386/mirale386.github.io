@@ -1,4 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hyy space</title><link>https://hyy313.github.io/</link><description>Recent content on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>bash config</title><link>https://hyy313.github.io/p/bash-config/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/bash-config/</guid><description>zsh 安装zsh
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hyy space</title><link>https://hyy313.github.io/</link><description>Recent content on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 02 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day3 内存管理 overload</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day3-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-overload/</link><pubDate>Wed, 02 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day3-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-overload/</guid><description>重载 由于之前提到的默认的c++ primitives在申请空间时需要额外的cookies，所以我们往往希望使用自己重载的版本。
+重载::operator new()、::operator delete() ::operator new()和::operator delete()都是全局(真正的全局，不是局限于单个文件的全局)函数，不可以定义在某个namespace内。
+重载后影响较大，因为会影响所有默认的new()、delete()，所以要十分注意。
+avatar
+重载operator new()、operator delete() avatar
+重载operator new[]、operator delete[] avatar
+重载placement new/delete即new()、delete() 正常来说对于placement new是不需要匹配的placement delete的，因为一般其没有空间分配操作。 但是我们重载的版本变为new()，调用类constuctor做对象初始化，一但空间分配失败，需要对应的delete()，但是可以忽略（在vc6中会有警告提示）。
+定义的placement delete或者确切的说delete()只有在new调用的constructor函数失败是才会被调用，至于具体会不会调用还要看编译器的处理。 猜测有的版本不调用是因为默认写法的空间分配是会做是否能成功申请到空间的判断的，若不能就直接释放，故不需要调用。
+avatar
+avatar
+注 placement_new第一个参数必须是size_t类型。
+basic_string 重载的 new(extra) avatar</description></item><item><title>bash config</title><link>https://hyy313.github.io/p/bash-config/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/bash-config/</guid><description>zsh 安装zsh
 sudo apt-get install zsh 安装ohmyzsh
 sh -c &amp;#34;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;#34; 配置ohmyzsh
 zsh字体:fonts-powerline
