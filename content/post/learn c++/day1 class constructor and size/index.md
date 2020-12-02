@@ -70,7 +70,7 @@ int main()
 
 - 运行结果
 
-![avatar](run1.jpg)
+![](run1.jpg)
 
 - 分析
 

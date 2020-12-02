@@ -13,7 +13,7 @@ tags:
 
 # c++程序，使用memory的途径
 
-![avatar](structure.jpg)
+![](structure.jpg)
 
 c++程序有四种方式使用内存：
     
@@ -22,11 +22,11 @@ c++程序有四种方式使用内存：
 3. CRT malloc/free；
 4. OS API。
 
-![avatar](memory_case.jpg)
+![](memory_case.jpg)
 
 ## new expression
 
-![avatar](new_expression.jpg)
+![](new_expression.jpg)
 
 new expression具体执行流程：
 
@@ -39,7 +39,7 @@ new expression具体执行流程：
 
     `placement new()`用于对已有空间进行初始化，而不申请空间，故没有配对的`placement delete`
 
-![avatar](delete_expression.jpg)
+![](delete_expression.jpg)
 
 delete expression流程：
 
@@ -49,7 +49,7 @@ delete expression流程：
 
 ## array new, array delete
 
-![avatar](array_new+array_delete.jpg)
+![](array_new+array_delete.jpg)
 
 此处不太寻常，进行`new[]`时，申请的空间带一块cookie。
 
@@ -59,13 +59,13 @@ delete expression流程：
 
 对于内置基本类型，如下：
 
-![avatar](array_size.jpg)
+![](array_size.jpg)
 
 注意到申请的空间并不止40bytes！
 
 再来看对于自定义类会怎样：
 
-![avatar](array_size2.jpg)
+![](array_size2.jpg)
 
 申请的空间为（32+4）+4+36+（4*2）=84->96bytes！
 
@@ -75,15 +75,15 @@ delete expression流程：
 
 ## placement new
 
-![avatar](placement_new.jpg)
+![](placement_new.jpg)
 
 `placement new`不分配内存空间，而是在已分配空间构建对象。
 
 ## c++ memory分配
 
-![avatar](memory_allocate.jpg)
+![](memory_allocate.jpg)
 
-![avatar](memory_allocate2.jpg)
+![](memory_allocate2.jpg)
 
 如最开始所说，c++应用程序分配内存的方式可以由上往下一步一步调用：new/delete->operator new/delete()->局部/全局 oprator new/delete()->malloc/free;或者直接使用malloc/free。
 
