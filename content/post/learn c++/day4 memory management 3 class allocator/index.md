@@ -1,6 +1,6 @@
 ---
 author: mirale
-title: 重新学c++ day3 内存管理 class allocator
+title: 重新学c++ day4 内存管理 class allocator
 date: 2020-12-03
 description: memory management - class allocator
 categories:
