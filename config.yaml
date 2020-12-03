@@ -13,7 +13,7 @@ params:
   sidebar:
     emoji: "\U0001F365"
     avatar: img/hhh1.jpg
-    subtitle: 'code make happy'
+    subtitle: 'code make me happy'
   article:
     license:
       enabled: true
