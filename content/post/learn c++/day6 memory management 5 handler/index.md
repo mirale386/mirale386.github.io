@@ -25,6 +25,17 @@ handler常用手段：
 
 ![](new_handler_case.jpg)
 
+## default & delete
+
+![](default_delete.jpg)
+
+并不只有默认构造函数、默认拷贝构造函数可以`=default`和`=delete`;
+operator new/delete也可以。
+
+![](default_delete_case.jpg)
+
+实际测试发现，并不能`=default`，但可以`=delete`。
+
 # allocator
 
 ## vc6 malloc()
@@ -33,7 +44,7 @@ allocator抽象出来就是为了减少malloc的cookie消耗，同时有一个�
 
 ![](malloc_vc6.jpg)
 
-前后红色的为cookie，中间还由debug模块，和pad填充模块，共同组成16倍数的空间。
+前后红色的为cookie，中间为debug模块、pad填充模块和实际区块，共同组成16倍数的空间。
 malloc在真正的区块周围进行封装都是为了方便free释放空间与其余一些操作，比如debug？
 
 ## vc6 std::allocator
@@ -47,7 +58,6 @@ malloc在真正的区块周围进行封装都是为了方便free释放空间与�
 ![](stdmalloc_bc5.jpg)
 
 观察代码可以发现，BC5的标准allocator使用的也是operator new/delete()。
-
 
 ## GN2.9 std::allocator
 
