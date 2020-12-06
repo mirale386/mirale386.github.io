@@ -82,6 +82,7 @@ delete expression流程：
 ## c++ memory分配
 
 ![](memory_allocate.jpg)
+
 ![](memory_allocate2.jpg)
 
 如最开始所说，c++应用程序分配内存的方式可以由上往下一步一步调用：new/delete->operator new/delete()->局部/全局 oprator new/delete()->malloc/free;或者直接使用malloc/free。

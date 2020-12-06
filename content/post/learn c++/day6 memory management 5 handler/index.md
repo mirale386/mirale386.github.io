@@ -85,6 +85,7 @@ malloc在真正的区块周围进行封装都是为了方便free释放空间与�
 ## 对比std::alloc & pool_alloc
 
 ![](std_alloc_pool_alloc.jpg)
+
 ![](std_alloc_pool_alloc2.jpg)
 
 两者对比，由于版本更新带来的语言特性不同，仅代码风格不同。
