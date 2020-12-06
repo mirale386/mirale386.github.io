@@ -20,9 +20,7 @@ tags:
 观察前面的class allocator发现，内存分配操作相同，可以抽取出来实现代码重用。
 
 ![](static_allocator.jpg)
-
 ![](static_allocator_case.jpg)
-
 ![](static_allocator_run.jpg)
 
 ## macro allocator
@@ -30,7 +28,6 @@ tags:
 观察static allocator发现，class内部对于其使用也是重复过程，可以进一步抽取代码实现复用。
 
 ![](macro_allocator.jpg)
-
 ![](macro_allocator_run.jpg)
 
 ## global allocator

@@ -16,7 +16,6 @@ tags:
 ## pre-class allocator 1
 
 ![](class_allocator1.jpg)
-
 ![](class_allocator1case.jpg)
 
 这里的内存分配，与重载new()不同之处在于引入了一个next指针以构建类似内存池的思想，提前把后续需要的申请出来组成一个链表（观察代码可以发现其本质就是一个数组）。但是代价是每个对象增加了一个指针的空间消耗，以及不确定后续是否会全部使用造成的空间浪费。
@@ -81,7 +80,6 @@ int main()
 ## pre-class allocator 2
 
 ![](class_allocator2.jpg)
-
 ![](class_allocator2case.jpg)
 
 第二种方式，利用了union使用embedded pointer，来避免第一种方法中引入指针造成的多余空间消耗。

@@ -40,7 +40,6 @@ tags:
 猜测有的版本不调用是因为默认写法的空间分配是会做是否能成功申请到空间的判断的，若不能就直接释放，故不需要调用。
 
 ![](overload_placementnew.jpg)
-
 ![](overload_placementdelete.jpg)
 
 - 注

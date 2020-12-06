@@ -72,3 +72,19 @@ malloc在真正的区块周围进行封装都是为了方便free释放空间与�
 
 此处还有一点不同，分配空间时的方法用的是static的，而不是对象的方法调用。
 `alloc::allocate(512)`对比前面的`allocator<int>().allocate(512)`。
+
+## GN4.9 std::allocator
+
+![](stdmalloc_gn4.jpg)
+
+观察代码可以发现，GN4.9的标准allocator使用的也是operator new/delete()。
+之前2.9版本的std::alloc，在4.9化身为pool_alloc。
+
+![](gn4_pool_alloc.jpg)
+
+## 对比std::alloc & pool_alloc
+
+![](std_alloc_pool_alloc.jpg)
+![](std_alloc_pool_alloc2.jpg)
+
+两者对比，由于版本更新带来的语言特性不同，仅代码风格不同。
