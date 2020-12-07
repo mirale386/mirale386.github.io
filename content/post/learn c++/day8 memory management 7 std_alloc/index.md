@@ -1,7 +1,7 @@
 ---
 author: mirale
 title: 重新学c++ day8 内存管理 GN2.9 std::alloc 2
-date: 2020-12-06
+date: 2020-12-07
 description: memory management - GN2.9 std::alloc
 categories:
   - c++
