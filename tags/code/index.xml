@@ -4,7 +4,30 @@ std::alloc由16个指针组成，共同构成一个内存池。
 从0-15的指针分别对应8B-8*16B的基本块大小！
 分配流程（无限内存） 申请空间，自动对齐至8字节； 查看对应指针有无空间： 2.1 没有，查看是否有申请空间未使用：
 2.1.1 若有，检查未使用空间是否足够分配： 2.1.1.1 空间可以进行分配，则尽最大可能分配，分配规则为1-20个对应块大小； 2.1.1.2 空间不足，则将当前空间分配给合适的指针块，再去做空间申请。 2.1.2 若没有，则申请空间。申请规则：申请20个该块大小，同时再申请一份20个块大小做占备池，还要申请已申请空间除16对齐至16倍数的追加量。 2.2 有，则检查是否有剩余块：
-2.2.1 有，直接分配； 2.</description></item><item><title>重新学c++ day6 内存管理 handler and std::allocator初涉</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</link><pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</guid><description>源自侯捷老师内存管理课程！
+2.2.1 有，直接分配； 2.</description></item><item><title>重新学c++ day8 内存管理 GN2.9 std::alloc 2</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</link><pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</guid><description>源自侯捷老师内存管理课程！
+GN2.9 std::alloc 源码剖析 一级分配器：用于处理无法使用内存池分配空间的场景。 通过使用handler完成。
+二级分配器：使用前一篇中的内存池思想进行分配。 private:
+ROUND_UP：向上取16倍数。
+FREELIST_INDEX：根据大小去到对应的内存池位置。
+refill：申请空间。
+chunk_alloc：对未分配空间做分配。
+_ALIGN：小区块下界。
+_ALIGN：小区块上界。
+_NFREELISTS：内存池块类别大小，即free-list个数。
+start_free：未分配空间头指针。
+end_free：未分配空间尾指针。
+heap_size：已申请空间大小。
+public:
+allocate：申请内存。
+deallocate：释放内存。
+问题：
+释放的空间没有判断是否是内存池的。
+因为不是内存池的大小不是固定为8的倍数，会带来灾难后果。
+没有free，释放的空间并没有真正退回，而是一直持有。
+会有浪费内存的现象！反而不如malloc带cookie？
+分配的时候，将得到的块返回，将当前的free-list指针指向第一个空块。
+回收的时候，结合上面的思想，将要回收的空间头插回free-list指针。
+严格遵循流程：</description></item><item><title>重新学c++ day6 内存管理 handler and std::allocator初涉</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</link><pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</guid><description>源自侯捷老师内存管理课程！
 handler
 handler的作用就是在operator new分配空间失败的时候，解决问题的手段，会被循环调用，最后才会抛出std::bad_alloc异常。
 handler常用手段：
@@ -29,8 +52,9 @@ macro allocator 观察static allocator发现，class内部对于其使用也是�
 global allocator 直接开辟一个固定大小的allocator专门来做内存分配，内存池思想，std::allocator雏形。</description></item><item><title>重新学c++ day4 内存管理 class allocator</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day4-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-class-allocator/</link><pubDate>Thu, 03 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day4-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-class-allocator/</guid><description>源自侯捷老师内存管理课程！
 class allocator pre-class allocator 1
 这里的内存分配，与重载new()不同之处在于引入了一个next指针以构建类似内存池的思想，提前把后续需要的申请出来组成一个链表（观察代码可以发现其本质就是一个数组）。但是代价是每个对象增加了一个指针的空间消耗，以及不确定后续是否会全部使用造成的空间浪费。
-这里我学习的时候走入了一个误区，定义类数组的时候去申请了空间，后面对类初始化的时候又去申请了空间。最开始我认为这里有矛盾，对一个类做了两次空间申请，所以就很好奇，此处类初始化的new难道不就是placement new吗？
-其实并不是如此，还是基础知识不牢靠！定义数组的本质是定义了一个指向该类型的指针的集合，所以定义数组的时候申请的空间是一个指针数组，做类初始化的时候才真正调用new申请类的空间同时进行类的初始化。
+这里我学习的时候走入了一个误区，定义类指针数组的时候去申请了空间，后面对类初始化的时候又去申请了空间。最开始我认为这里有矛盾，对一个类做了两次空间申请，所以就很好奇，此处类初始化的new难道不就是placement new吗？
+其实并不是如此，还是基础知识不牢靠，上面的猜想是定义类数组！
+定义指针数组的本质是定义了一个指向该类型的指针的集合，所以定义数组的时候申请的空间是一个指针数组，做类初始化的时候才真正调用new申请类的空间同时进行类的初始化。
 验证如下：
 #include &amp;lt;bits/stdc++.h&amp;gt; using namespace std; class Test { public: Test() { cout &amp;lt;&amp;lt; &amp;#34;Test()&amp;#34; &amp;lt;&amp;lt; endl; } void *operator new(size_t size) { cout &amp;lt;&amp;lt; &amp;#34;new&amp;#34; &amp;lt;&amp;lt; endl; ::operator new(size); } string s = &amp;#34;string&amp;#34;; }; int main() { Test *at[10]; cout &amp;lt;&amp;lt; &amp;#34;string size :&amp;#34; &amp;lt;&amp;lt; sizeof(string) &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; &amp;#34;at size : &amp;#34; &amp;lt;&amp;lt; sizeof(at) &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; &amp;#34;at[0] size : &amp;#34; &amp;lt;&amp;lt; sizeof(at[0]) &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; at[9]-&amp;gt;s &amp;lt;&amp;lt; endl; at[0] = new Test(); return 0; } 运行结果：</description></item><item><title>重新学c++ day3 内存管理 overload</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day3-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-overload/</link><pubDate>Wed, 02 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day3-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-overload/</guid><description>源自侯捷老师内存管理课程！
 重载 由于之前提到的默认的c++ primitives在申请空间时需要额外的cookies，所以我们往往希望使用自己重载的版本。
