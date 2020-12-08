@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>code on hyy space</title><link>https://hyy313.github.io/tags/code/</link><description>Recent content in code on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/tags/code/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day7 内存管理 GN2.9 std::alloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc/</link><pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc/</guid><description>源自侯捷老师内存管理课程！
-GN2.9 std::alloc 运行机制
-std::alloc由16个指针组成，共同构成一个内存池。
-从0-15的指针分别对应8B-8*16B的基本块大小！
-分配流程（无限内存） 申请空间，自动对齐至8字节； 查看对应指针有无空间： 2.1 没有，查看是否有申请空间未使用：
-2.1.1 若有，检查未使用空间是否足够分配： 2.1.1.1 空间可以进行分配，则尽最大可能分配，分配规则为1-20个对应块大小； 2.1.1.2 空间不足，则将当前空间分配给合适的指针块，再去做空间申请。 2.1.2 若没有，则申请空间。申请规则：申请20个该块大小，同时再申请一份20个块大小做占备池，还要申请已申请空间除16对齐至16倍数的追加量。 2.2 有，则检查是否有剩余块：
-2.2.1 有，直接分配； 2.</description></item><item><title>重新学c++ day8 内存管理 GN2.9 std::alloc 2</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</link><pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</guid><description>源自侯捷老师内存管理课程！
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>code on hyy space</title><link>https://hyy313.github.io/tags/code/</link><description>Recent content in code on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 08 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/tags/code/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day9 内存管理 GN2.9 std::alloc 3</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</link><pubDate>Tue, 08 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</guid><description>源自侯捷老师内存管理课程！
+std::alloc 代码风格
+优秀的避免非语法bug的写法 判断变量是否为某个值的时候，将值写在==左边，变量在右边，就可以避免漏写=！ 变量最好离使用代码近一点，防止中间发生变化！ pointer不跟着定义，属于变量部分&amp;hellip;emm，为了代码可读性，直接分开定义！ 炫技函数指针&amp;hellip;老老实实写代码！ new就要配合free使用。 pool allocator
+可以根据结果观察到，std_alloc与pool_allocator使用内存池，减少了分配次数与cookie，但是由于内存池本身结构增加了内存消耗！
+std_alloc本质上底层还是使用malloc，只是不像之前一样要一个给一个，而是我一次给你申请20个，减少了19个cookies。 所以侯捷老师说的使用operator new解决不太能理解，因为operator new本质也是调用的malloc。 operator new少掉cookie通过规定malloc一次要多个来解决内部cookie，但是malloc自动去申请的空间总是自带cookie。 此处还需要观察一下！</description></item><item><title>重新学c++ day8 内存管理 GN2.9 std::alloc 2</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</link><pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</guid><description>源自侯捷老师内存管理课程！
 GN2.9 std::alloc 源码剖析 一级分配器：用于处理无法使用内存池分配空间的场景。 通过使用handler完成。
 二级分配器：使用前一篇中的内存池思想进行分配。 private:
 ROUND_UP：向上取16倍数。
@@ -27,7 +25,13 @@ deallocate：释放内存。
 会有浪费内存的现象！反而不如malloc带cookie？
 分配的时候，将得到的块返回，将当前的free-list指针指向第一个空块。
 回收的时候，结合上面的思想，将要回收的空间头插回free-list指针。
-严格遵循流程：</description></item><item><title>重新学c++ day6 内存管理 handler and std::allocator初涉</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</link><pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</guid><description>源自侯捷老师内存管理课程！
+严格遵循流程：</description></item><item><title>重新学c++ day7 内存管理 GN2.9 std::alloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc/</link><pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc/</guid><description>源自侯捷老师内存管理课程！
+GN2.9 std::alloc 运行机制
+std::alloc由16个指针组成，共同构成一个内存池。
+从0-15的指针分别对应8B-8*16B的基本块大小！
+分配流程（无限内存） 申请空间，自动对齐至8字节； 查看对应指针有无空间： 2.1 没有，查看是否有申请空间未使用：
+2.1.1 若有，检查未使用空间是否足够分配： 2.1.1.1 空间可以进行分配，则尽最大可能分配，分配规则为1-20个对应块大小； 2.1.1.2 空间不足，则将当前空间分配给合适的指针块，再去做空间申请。 2.1.2 若没有，则申请空间。申请规则：申请20个该块大小，同时再申请一份20个块大小做占备池，还要申请已申请空间除16对齐至16倍数的追加量。 2.2 有，则检查是否有剩余块：
+2.2.1 有，直接分配； 2.</description></item><item><title>重新学c++ day6 内存管理 handler and std::allocator初涉</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</link><pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</guid><description>源自侯捷老师内存管理课程！
 handler
 handler的作用就是在operator new分配空间失败的时候，解决问题的手段，会被循环调用，最后才会抛出std::bad_alloc异常。
 handler常用手段：
