@@ -24,13 +24,22 @@ tags:
 
 ![](SBH_heap_init.jpg)
 
+heap_init：从系统获取内存页（4k），供后续使用。
+
 ![](SBH_heap_init_header.jpg)
+
+heap_init使用的header结构，16个，一个管理1MB空间。
+
+- 问题：
+  详细探索其中结构，总共16M？，32与64是管理啥的？
 
 ![](SBH_ioinit.jpg)
 
-
+ioinit：初始化块中debug的部分！
 
 ![](SBH_heap_alloc_dbg.jpg)
+
+ioinit中debug使用的debug header：
 
 `CrtMemBlockHeader`--用于Debug的块结构，即为DEBUG header
 
@@ -56,13 +65,17 @@ tags:
 
 ![](SBH_heap_alloc.jpg)
 
+heap alloc：根据申请的空间分配内存。
+
 比1016而不比1024是因为还有8为cookie留的！
 
 ![](SBH_alloc_block.jpg)
 
+sbh alloc block：分配的块结构。
+
 ROUNDUP(块大小+cookie)，向上取到16的倍数！
 
-cookie借用最后一位的0、1表示该块是否分配！
+cookie中的内容借用最后一位的0、1表示该块是否分配！
 
 ![](SBH_alloc_new_region.jpg)
 
@@ -85,6 +98,8 @@ BITVEC 共同组成一个32*64的位图，表示是否被使用。
 ![](SBH_alloc_new_group.jpg)
 
 ![](SBH_alloc_new_group2.jpg)
+
+page中黄色区域两个-1用作回收空间时的上下篱笆（类似cookie作用），保证回收至原先的每页4K，不在往上合并。
 
 group是虚拟存储空间:
 
