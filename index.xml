@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hyy space</title><link>https://hyy313.github.io/</link><description>Recent content on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day10 内存管理 vc malloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</link><pubDate>Wed, 09 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</guid><description>源自侯捷老师内存管理课程！
 vc malloc vc6与vc10对比
 vc6 malloc 分析
+heap_init：从系统获取内存页（4k），供后续使用。
+heap_init使用的header结构，16个，一个管理1MB空间。
+问题： 详细探索其中结构，总共16M？，32与64是管理啥的？
+ioinit：初始化块中debug的部分！
+ioinit中debug使用的debug header：
 CrtMemBlockHeader&amp;ndash;用于Debug的块结构，即为DEBUG header
 前向指针 后向指针 文件名 行数 块大小 块使用类型标记，见本章最后一张图 流水号 前无人区 后续结构：
 数据块 后无人区 前后无人区用于保护真正的数据块，调试的时候方便检测出使用越界！
 上下红色为cookie。
+heap alloc：根据申请的空间分配内存。
 比1016而不比1024是因为还有8为cookie留的！
+sbh alloc block：分配的块结构。
 ROUNDUP(块大小+cookie)，向上取到16的倍数！
-cookie借用最后一位的0、1表示该块是否分配！
-一个header可以管理1MB空间，成本约为16KB。
-region是header中的管理结构：
-tagRegion
-BITVEC 共同组成一个32*64的位图，表示是否被使用。
-tagGroup
-管理实体，64组。
-tagListHead
-实体为list结构，需要前后指针。</description></item><item><title>重新学c++ day9 内存管理 GN2.9 std::alloc 3</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</link><pubDate>Tue, 08 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</guid><description>源自侯捷老师内存管理课程！
+cookie中的内容借用最后一位的0、1表示该块是否分配！</description></item><item><title>重新学c++ day9 内存管理 GN2.9 std::alloc 3</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</link><pubDate>Tue, 08 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</guid><description>源自侯捷老师内存管理课程！
 std::alloc 代码风格
 优秀的避免非语法bug的写法 判断变量是否为某个值的时候，将值写在==左边，变量在右边，就可以避免漏写=！ 变量最好离使用代码近一点，防止中间发生变化！ pointer不跟着定义，属于变量部分&amp;hellip;emm，为了代码可读性，直接分开定义！ 炫技函数指针&amp;hellip;老老实实写代码！ new就要配合free使用。 pool allocator
 可以根据结果观察到，std_alloc与pool_allocator使用内存池，减少了分配次数与cookie，但是由于内存池本身结构增加了内存消耗！
