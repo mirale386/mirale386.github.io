@@ -6,6 +6,7 @@ description: memory management - allocator
 categories:
   - c++
 tags:
+  - memory management
   - code
 ---
 

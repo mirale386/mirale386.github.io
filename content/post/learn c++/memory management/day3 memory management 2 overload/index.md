@@ -6,6 +6,7 @@ description: memory management - overload
 categories:
   - c++
 tags:
+  - memory management
   - code
 ---
 

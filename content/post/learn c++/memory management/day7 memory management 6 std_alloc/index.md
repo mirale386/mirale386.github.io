@@ -6,6 +6,7 @@ description: memory management - GN2.9 std::alloc
 categories:
   - c++
 tags:
+  - memory management
   - code
 ---
 

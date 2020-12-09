@@ -6,6 +6,7 @@ description: memory management - c++ primitives
 categories:
   - c++
 tags:
+  - memory management
   - code
 ---
 

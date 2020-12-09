@@ -6,6 +6,7 @@ description: memory management - handler and a brief to std::allocator
 categories:
   - c++
 tags:
+  - memory management
   - code
 ---
 
