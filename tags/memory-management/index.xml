@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>memory management on hyy space</title><link>https://hyy313.github.io/tags/memory-management/</link><description>Recent content in memory management on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/tags/memory-management/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day10 内存管理 vc malloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</link><pubDate>Wed, 09 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</guid><description>源自侯捷老师内存管理课程！
+vc malloc vc6与vc10对比
+vc6 malloc 分析
+CrtMemBlockHeader&amp;ndash;用于Debug的块结构，即为DEBUG header
+前向指针 后向指针 文件名 行数 块大小 块使用类型标记，见本章最后一张图 流水号 前无人区 后续结构：
+数据块 后无人区 前后无人区用于保护真正的数据块，调试的时候方便检测出使用越界！
+上下红色为cookie。
+比1016而不比1024是因为还有8为cookie留的！
+ROUNDUP(块大小+cookie)，向上取到16的倍数！
+cookie借用最后一位的0、1表示该块是否分配！
+一个header可以管理1MB空间，成本约为16KB。
+region是header中的管理结构：
+tagRegion
+BITVEC 共同组成一个32*64的位图，表示是否被使用。
+tagGroup
+管理实体，64组。
+tagListHead
+实体为list结构，需要前后指针。</description></item><item><title>重新学c++ day9 内存管理 GN2.9 std::alloc 3</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</link><pubDate>Tue, 08 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day9-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-3/</guid><description>源自侯捷老师内存管理课程！
+std::alloc 代码风格
+优秀的避免非语法bug的写法 判断变量是否为某个值的时候，将值写在==左边，变量在右边，就可以避免漏写=！ 变量最好离使用代码近一点，防止中间发生变化！ pointer不跟着定义，属于变量部分&amp;hellip;emm，为了代码可读性，直接分开定义！ 炫技函数指针&amp;hellip;老老实实写代码！ new就要配合free使用。 pool allocator
+可以根据结果观察到，std_alloc与pool_allocator使用内存池，减少了分配次数与cookie，但是由于内存池本身结构增加了内存消耗！
+std_alloc本质上底层还是使用malloc，只是不像之前一样要一个给一个，而是我一次给你申请20个，减少了19个cookies。 所以侯捷老师说的使用operator new解决不太能理解，因为operator new本质也是调用的malloc。 operator new少掉cookie通过规定malloc一次要多个来解决内部cookie，但是malloc自动去申请的空间总是自带cookie。 此处还需要观察一下！</description></item><item><title>重新学c++ day8 内存管理 GN2.9 std::alloc 2</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</link><pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day8-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc-2/</guid><description>源自侯捷老师内存管理课程！
+GN2.9 std::alloc 源码剖析 一级分配器：用于处理无法使用内存池分配空间的场景。 通过使用handler完成。
+二级分配器：使用前一篇中的内存池思想进行分配。 private:
+ROUND_UP：向上取16倍数。
+FREELIST_INDEX：根据大小去到对应的内存池位置。
+refill：申请空间。
+chunk_alloc：对未分配空间做分配。
+_ALIGN：小区块下界。
+_ALIGN：小区块上界。
+_NFREELISTS：内存池块类别大小，即free-list个数。
+start_free：未分配空间头指针。
+end_free：未分配空间尾指针。
+heap_size：已申请空间大小。
+public:
+allocate：申请内存。
+deallocate：释放内存。
+问题：
+释放的空间没有判断是否是内存池的。
+因为不是内存池的大小不是固定为8的倍数，会带来灾难后果。
+没有free，释放的空间并没有真正退回，而是一直持有。
+会有浪费内存的现象！反而不如malloc带cookie？
+分配的时候，将得到的块返回，将当前的free-list指针指向第一个空块。
+回收的时候，结合上面的思想，将要回收的空间头插回free-list指针。
+严格遵循流程：</description></item><item><title>重新学c++ day7 内存管理 GN2.9 std::alloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc/</link><pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day7-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-gn2.9-stdalloc/</guid><description>源自侯捷老师内存管理课程！
+GN2.9 std::alloc 运行机制
+std::alloc由16个指针组成，共同构成一个内存池。
+从0-15的指针分别对应8B-8*16B的基本块大小！
+分配流程（无限内存） 申请空间，自动对齐至8字节； 查看对应指针有无空间： 2.1 没有，查看是否有申请空间未使用：
+2.1.1 若有，检查未使用空间是否足够分配： 2.1.1.1 空间可以进行分配，则尽最大可能分配，分配规则为1-20个对应块大小； 2.1.1.2 空间不足，则将当前空间分配给合适的指针块，再去做空间申请。 2.1.2 若没有，则申请空间。申请规则：申请20个该块大小，同时再申请一份20个块大小做占备池，还要申请已申请空间除16对齐至16倍数的追加量。 2.2 有，则检查是否有剩余块：
+2.2.1 有，直接分配； 2.</description></item><item><title>重新学c++ day6 内存管理 handler and std::allocator初涉</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</link><pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day6-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-handler-and-stdallocator%E5%88%9D%E6%B6%89/</guid><description>源自侯捷老师内存管理课程！
+handler
+handler的作用就是在operator new分配空间失败的时候，解决问题的手段，会被循环调用，最后才会抛出std::bad_alloc异常。
+handler常用手段：
+调整内存，重新分配内存空间 打印错误，做错误处理，调用abort()或exit() 空handler会带来死循环，直至分配到内存为止！
+default &amp;amp; delete
+并不只有默认构造函数、默认拷贝构造函数可以=default和=delete; operator new/delete也可以。
+实际测试发现，并不能=default，但可以=delete。
+allocator vc6 malloc() allocator抽象出来就是为了减少malloc的cookie消耗，同时有一个先决假设：malloc效率低（实际并不是）。
+前后红色的为cookie，中间为debug模块、pad填充模块和实际区块，共同组成16倍数的空间。 malloc在真正的区块周围进行封装都是为了方便free释放空间与其余一些操作，比如debug？
+vc6 std::allocator
+观察代码可以发现，vc6的标准allocator使用的还是operator new/delete()。
+BC5 std::allocator
+观察代码可以发现，BC5的标准allocator使用的也是operator new/delete()。
+GN2.9 std::allocator
+观察代码可以发现，GN2.9的标准allocator使用的也是operator new/delete()。 但是有个注释，不建议使用标准的allocator，建议使用GN2.9带来的SGI allocator。
+然而GN2.9的容器使用的不是标准的allocator，而是SGI allocator。
+此处还有一点不同，分配空间时的方法用的是static的，而不是对象的方法调用。 alloc::allocate(512)对比前面的allocator&amp;lt;int&amp;gt;().allocate(512)。
+GN4.9 std::allocator</description></item><item><title>重新学c++ day5 内存管理 allocator演变</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day5-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator%E6%BC%94%E5%8F%98/</link><pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day5-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator%E6%BC%94%E5%8F%98/</guid><description>源自侯捷老师内存管理课程！
+allocator 人类追求的本质是简化操作，在追求懒得路上一路狂奔，这就是代码重用的意义。(●'◡'●)
+static allocator 观察前面的class allocator发现，内存分配操作相同，可以抽取出来实现代码重用。
+macro allocator 观察static allocator发现，class内部对于其使用也是重复过程，可以进一步抽取代码实现复用。
+global allocator 直接开辟一个固定大小的allocator专门来做内存分配，内存池思想，std::allocator雏形。</description></item><item><title>重新学c++ day4 内存管理 class allocator</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day4-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-class-allocator/</link><pubDate>Thu, 03 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day4-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-class-allocator/</guid><description>源自侯捷老师内存管理课程！
+class allocator pre-class allocator 1
+这里的内存分配，与重载new()不同之处在于引入了一个next指针以构建类似内存池的思想，提前把后续需要的申请出来组成一个链表（观察代码可以发现其本质就是一个数组）。但是代价是每个对象增加了一个指针的空间消耗，以及不确定后续是否会全部使用造成的空间浪费。
+这里我学习的时候走入了一个误区，定义类指针数组的时候去申请了空间，后面对类初始化的时候又去申请了空间。最开始我认为这里有矛盾，对一个类做了两次空间申请，所以就很好奇，此处类初始化的new难道不就是placement new吗？
+其实并不是如此，还是基础知识不牢靠，上面的猜想是定义类数组！
+定义指针数组的本质是定义了一个指向该类型的指针的集合，所以定义数组的时候申请的空间是一个指针数组，做类初始化的时候才真正调用new申请类的空间同时进行类的初始化。
+验证如下：
+#include &amp;lt;bits/stdc++.h&amp;gt; using namespace std; class Test { public: Test() { cout &amp;lt;&amp;lt; &amp;#34;Test()&amp;#34; &amp;lt;&amp;lt; endl; } void *operator new(size_t size) { cout &amp;lt;&amp;lt; &amp;#34;new&amp;#34; &amp;lt;&amp;lt; endl; ::operator new(size); } string s = &amp;#34;string&amp;#34;; }; int main() { Test *at[10]; cout &amp;lt;&amp;lt; &amp;#34;string size :&amp;#34; &amp;lt;&amp;lt; sizeof(string) &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; &amp;#34;at size : &amp;#34; &amp;lt;&amp;lt; sizeof(at) &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; &amp;#34;at[0] size : &amp;#34; &amp;lt;&amp;lt; sizeof(at[0]) &amp;lt;&amp;lt; endl; cout &amp;lt;&amp;lt; at[9]-&amp;gt;s &amp;lt;&amp;lt; endl; at[0] = new Test(); return 0; } 运行结果：</description></item><item><title>重新学c++ day3 内存管理 overload</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day3-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-overload/</link><pubDate>Wed, 02 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day3-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-overload/</guid><description>源自侯捷老师内存管理课程！
+重载 由于之前提到的默认的c++ primitives在申请空间时需要额外的cookies，所以我们往往希望使用自己重载的版本。
+重载::operator new()、::operator delete() ::operator new()和::operator delete()都是全局(真正的全局，不是局限于单个文件的全局)函数，不可以定义在某个namespace内。
+重载后影响较大，因为会影响所有默认的new()、delete()，所以要十分注意。
+重载operator new()、operator delete()
+重载operator new[]、operator delete[]
+重载placement new/delete即new()、delete() 正常来说对于placement new是不需要匹配的placement delete的，因为一般其没有空间分配操作。 但是我们重载的版本变为new()，先申请空间然后调用类constuctor做对象初始化，一但空间分配失败，需要对应的delete()，但是可以忽略（在vc6中会有警告提示）。
+定义的placement delete或者确切的说delete()只有在new调用的constructor函数失败时才会被调用，至于具体会不会调用还要看编译器的处理。 猜测有的版本不调用是因为默认写法的空间分配是会做是否能成功申请到空间的判断的，若不能就直接释放，故不需要调用。
+注 placement_new第一个参数必须是size_t类型。
+basic_string 重载的 new(extra)</description></item><item><title>重新学c++ day2 内存管理 c++ primitives</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day2-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-c-primitives/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day2-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-c-primitives/</guid><description>源自侯捷老师内存管理课程！
+c++程序，使用memory的途径
+c++程序有四种方式使用内存：
+c++ libarary（比如标准库）； c++ primitives（new,new[],new(),::operator new(),&amp;hellip;）； CRT malloc/free； OS API。
+new expression
+new expression具体执行流程：
+首先调用operator new()，申请空间 申请空间，再去调用malloc分配内存 对申请的内存进行转换，以便初始化 通过placement new()进行初始化 注：
+placement new()用于对已有空间进行初始化，而不申请空间，故没有配对的placement delete
+delete expression流程：
+首先调用析构函数 接着operator delete 再调用free释放内存 array new, array delete
+此处不太寻常，进行new[]时，申请的空间带一块cookie。
+new[]与delete[]应配对使用。若使用delete，由于底层调用的free，根据cookie可以正确释放new申请内存空间，但是无法释放构造函数中申请的别的内存空间。
+让我们看看cookie，也就是new[]到底申请了一片什么空间？
+对于内置基本类型，如下：
+注意到申请的空间并不止40bytes！
+再来看对于自定义类会怎样：</description></item></channel></rss>
