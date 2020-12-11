@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hyy space</title><link>https://hyy313.github.io/</link><description>Recent content on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day10 内存管理 vc malloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</link><pubDate>Wed, 09 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</guid><description>源自侯捷老师内存管理课程！
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hyy space</title><link>https://hyy313.github.io/</link><description>Recent content on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 11 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day11 内存管理 vc memory alloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day11-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-memory-alloc/</link><pubDate>Fri, 11 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day11-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-memory-alloc/</guid><description>源自侯捷老师内存管理课程！
+vc6 memory alloc alloc
+首次分配初始化流程：
+HeapAlloc：堆分配，初始化16个header； VirtualAlloc：对header做内存分配，占据1MB内存； HeapAlloc：初始化header管理的Region和Groups； VirtualAlloc：从1MB中分配32K（8个4K页）。 然后将申请到的32K挂到Group1的最后一个Entry上，同步更新Region的bitmap中的最高位为1，表示最后一个实体上有待分配内存。 分配流程：
+从待分配中切割出需要的大小，根据需要大小计算（就是16倍数向上取整，同之前的allocator），再结合位图查找出比其大的第一个待分配块； 块中剩余空间挂载到对应的实体上，计算方式为空间大小/16，修改对应的位图位置为1。 隐藏细节： 正常分配的空间带Debug header，其中前两者为指针，此处的指针同嵌入式指针，尽在为使用的空间存在，使用的空间会被对应内容覆盖。
+cntEntries++!
+回收流程：将块挂载到对应Entry，计算方式同上，修改对应位图位置为1。
+隐藏细节： 为什么直接挂载过去，不用担心有多个吗？因为会有合并操作！见下面合并。
+cntEntries&amp;ndash;!
+合并流程：
+根据指针-4B，回到前cookie位置，加上cookie中的块大小，得到下一块的起始位置，即cookie位置； 查看对应cookie的最后一位，是0，执行向后合并； 再根据指针-4B，回到当前cookie位置，再-4B，得到上一块的尾cookie位置； 查看对应cookie的最后一位，是0，执行向前合并。 cookie的作用： 如同篱笆一样，鲜明的切割出每一块的前后，方便debug检测越界；但是最重要的原因是方便malloc中回收内存、避免内存碎片。
+free
+释放流程：
+根据p的位置可以计算出其属于哪个Header，通过p-header的pHeapData&amp;lt;1B判断； 根据p的位置计算其属于那个Group:（p-pHeapData）/32KB; 根据p计算出其属于哪个Entry（free-list）：p-pHeapData-groupNum*32KB/16B。 得到最终位置，进行释放。</description></item><item><title>重新学c++ day10 内存管理 vc malloc</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</link><pubDate>Wed, 09 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day10-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-vc-malloc/</guid><description>源自侯捷老师内存管理课程！
 vc malloc vc6与vc10对比
 vc6 malloc 分析
 heap_init：从系统获取内存页（4k），供后续使用。
