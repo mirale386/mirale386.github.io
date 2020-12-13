@@ -13,14 +13,15 @@ loki allocator FixedAllocator allocate
 deallocate
 回收流程：
 找到对应位置，删除：
-1.1 经典方法：根据指针加空间大小判断是否在该区间内； 1.2 不使用遍历，使用逼近检测，由dealloc出发向两头寻找。
+1.1 经典方法：根据指针加空间大小判断是否在该区间内；
+1.2 不使用遍历，使用逼近检测，由dealloc出发向两头寻找。
 执行对应的删除操作，需要判断是否全回收：
 2.1 当前是最后一个chunk，如果前一个chunk也为空，回收当前chunk及最后一个；
 2.2 当前不是最后一个chunk，并且最后一个chunk也为空，回收最后一个；
 2.3 当前不是最后一个chunk，并且不是全回收，将当前chunk置换到vector最后，回收。
 未考虑回收不在管理的空间怎么办？
-lo hi 同时碰到边界，直接返回不在！
-未解决：特殊情况下不归还chunk？
+lo与hi同时碰到边界，直接返回不存在！
+未解决：特殊情况下不归还chunk？lo、hi边界界定？
 analyz 存在bug：无法回收不是自己申请的空间、特殊情况不回收； 暴力loop，改进逼近loop判断落在那个区间； vector取代list； 不需要cnt就可以简单通过最后一个chunk是否为空判断全回收，同时带了defer； vector调用的什么allocator，由于vector比较简单，可以自己手撸一个。</description></item><item><title>重新学c++ day12 内存管理 loki allocator</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day12-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-allocator/</link><pubDate>Sat, 12 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day12-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-allocator/</guid><description>源自侯捷老师内存管理课程！
 loki allocator 3 classes
 3层结构，由下至上：Chunk、FixedAllocator、SmallObjAllocator
