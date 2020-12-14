@@ -1,4 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hyy space</title><link>https://hyy313.github.io/</link><description>Recent content on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day13 内存管理 loki advanced allocator</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day13-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-advanced-allocator/</link><pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day13-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-advanced-allocator/</guid><description>源自侯捷老师内存管理课程！
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hyy space</title><link>https://hyy313.github.io/</link><description>Recent content on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day14 内存管理 allocator analyz</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day14-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator-analyz/</link><pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day14-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator-analyz/</guid><description>源自侯捷老师内存管理课程！
+allocator analyz GNC allocator
+allocator诞生就是为了给容器使用，本质目的就是为了节省内存空间，去除malloc分配带来的cookie。部分allocator还是通过new/delete调用malloc/free。
+智能型allocator，就是使用缓存思想构建内存池，供所有容器共享（应该是使用该分配器的，但是内存池不是容器构建的吗？全局静态allocator，大家共享！）。
+GNC提供了三个评价allocator的性能指标：插入性能、多线程插入删除、单线程生产者消费者模型性能。
+另外的allocator：
+debug_allocator：为调用malloc/delete做一层封装; array_allocator：对已有数组封装。 vs2013 allocator
+直接调用new/delete。
+GN4.9 allocator std_allocator
+直接调用new/delete。
+malloc allocator
+直接调用malloc/free。
+malloc array allocator
+对数组进行封装，故不需要deallocate，allocate只是对已有空间分配及操作大小移动。
+debug allocator
+模仿malloc中的debugheader加了一个大小模块，同时又采用结构体对齐思想。
+GN2.9 std_alloc</description></item><item><title>重新学c++ day13 内存管理 loki advanced allocator</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day13-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-advanced-allocator/</link><pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day13-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-advanced-allocator/</guid><description>源自侯捷老师内存管理课程！
 loki allocator FixedAllocator allocate
 分配流程：
 寻找哪个块还有空间：
@@ -22,7 +38,7 @@ deallocate
 未考虑回收不在管理的空间怎么办？
 lo与hi同时碰到边界，直接返回不存在！
 未解决：特殊情况下不归还chunk？lo、hi边界界定？
-analyz 存在bug：无法回收不是自己申请的空间、特殊情况不回收； 暴力loop，改进逼近loop判断落在那个区间； vector取代list； 不需要cnt就可以简单通过最后一个chunk是否为空判断全回收，同时带了defer； vector调用的什么allocator，由于vector比较简单，可以自己手撸一个。</description></item><item><title>重新学c++ day12 内存管理 loki allocator</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day12-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-allocator/</link><pubDate>Sat, 12 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day12-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-allocator/</guid><description>源自侯捷老师内存管理课程！
+analyz</description></item><item><title>重新学c++ day12 内存管理 loki allocator</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day12-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-allocator/</link><pubDate>Sat, 12 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day12-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-loki-allocator/</guid><description>源自侯捷老师内存管理课程！
 loki allocator 3 classes
 3层结构，由下至上：Chunk、FixedAllocator、SmallObjAllocator
 Chunk：最下层具体存储结构，第一个指针直向全体空间，第二个为第一个待分配空间下标index，第三个为已分配空间数量。 FixedAllocator：中间管理层，Chunk数组，两个Chunk指针。 SmallObjAllocator：最高层，FixedChunk数组，两个FixedChunk指针，chunk大小，最大对象大小。 loki alloc
