@@ -69,6 +69,8 @@ tags:
 
 ### analyz
 
+![](loki_analyz.jpg)
+
 1. 存在bug：无法回收不是自己申请的空间、特殊情况不回收；
 2. 暴力loop，改进逼近loop判断落在那个区间；
 3. vector取代list；
