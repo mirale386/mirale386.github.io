@@ -86,7 +86,18 @@ GNC提供了三个评价allocator的性能指标：插入性能、多线程插�
 
 ![](GN4_bitmap_alloc.jpg)
 
+bitmap_alloc：一个元素一个元素分配，多个元素就调用new/delete处理。
+挖一大块，一个一个分配，标准内存池思想。
+
 ![](GN4_bitmap_alloc2.jpg)
+
+blocks：待分配的内存块。
+
+super-blocks：内存块与位图、使用量、大小（内存块+位图+使用量）组成的内存空间管理集合。
+
+bitmap：与每个块按位对应，从低位到高位表示从第一块到第n块是否使用。
+
+mini-vector：管理内存池的vector，不使用标准是为了避免allocator权责不清，鸡生蛋还是蛋生鸡？
 
 ![](GN4_bitmap_alloc3.jpg)
 
@@ -98,16 +109,33 @@ GNC提供了三个评价allocator的性能指标：插入性能、多线程插�
 
 ![](GN4_bitmap_alloc7.jpg)
 
+vector大小遵循正常的双倍扩充，内存块也是。
+
 ![](GN4_bitmap_alloc8.jpg)
 
+vector中Entries只属于某个固定类型，不可混用。
+
+- 问题：这种设定是否增加了空间分配的代价？
+
+不曾全回收就每次申请双倍扩充，全回收就减半！
+
 ![](GN4_bitmap_alloc9.jpg)
+
+内存回收问题：回收的块来到了另一个管理回收的vector，一旦超出entries阈值64，就自动归还最大的给os，这个vector是按空间大小从小到大排序的。
+
+回收后的分配问题，优先从后向前分配，尽量不去申请新空间！
 
 ![](GN4_bitmap_alloc10.jpg)
 
 ![](GN4_bitmap_alloc11.jpg)
 
+基本原则：尽量不新开辟空间，利用已有空间！
+
+此处先拉哪个出来，遵循全回收规模缩减原则！
 ### use case
 
 ![](GN4_alloc.jpg)
 
 ![](GN4_alloc2.jpg)
+
+导入对应头文件，通过对应using namespace调用。
