@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>c++ on hyy space</title><link>https://hyy313.github.io/categories/c++/</link><description>Recent content in c++ on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/categories/c++/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day14 内存管理 allocator analyz</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day14-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator-analyz/</link><pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day14-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator-analyz/</guid><description>源自侯捷老师内存管理课程！
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>c++ on hyy space</title><link>https://hyy313.github.io/categories/c++/</link><description>Recent content in c++ on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 19 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hyy313.github.io/categories/c++/index.xml" rel="self" type="application/rss+xml"/><item><title>重新学c++ day15 STL use</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day15-stl-use/</link><pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day15-stl-use/</guid><description>源自侯捷老师STL课程！
+STL Application componets
+此处与OO不同，数据在容器，操作在算法，迭代器将容器与算法连接，分配器为容器分配内存。
+仿函数模拟一些操作，算法是一些通用操作？
+适配器主要用于容器相关转换？
+iterator迭代器，左闭右开区间。
+container
+array定义需要带大小，array是在堆还是在栈？
+可以分析find和sort+bsearch时间消耗，find最差O(n)，sort快排O(nlogn)，所以find遍历更快，后续分析也可以得出，此处运气好时间ns级别。
+sort()函数，forward_list、list中自带。自带的函数一定是最优的，算法sort针对的是支持随机访问的iterator。
+deque结构为map+vector！其中封装边界处理。
+stack是deque的魔改。
+queue是deque的魔改。
+unordered容器底层即hashtable，此处拉链hashtable中桶数量必须比元素多。</description></item><item><title>重新学c++ day14 内存管理 allocator analyz</title><link>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day14-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator-analyz/</link><pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/%E9%87%8D%E6%96%B0%E5%AD%A6c-day14-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-allocator-analyz/</guid><description>源自侯捷老师内存管理课程！
 allocator analyz GNC allocator
 allocator诞生就是为了给容器使用，本质目的就是为了节省内存空间，去除malloc分配带来的cookie。部分allocator还是通过new/delete调用malloc/free。
 智能型allocator，就是使用缓存思想构建内存池，供所有容器共享（应该是使用该分配器的，但是内存池不是容器构建的吗？全局静态allocator，大家共享！）。
