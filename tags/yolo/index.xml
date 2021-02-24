@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>yolo on hyy space</title><link>https://hyy313.github.io/tags/yolo/</link><description>Recent content in yolo on hyy space</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://hyy313.github.io/tags/yolo/index.xml" rel="self" type="application/rss+xml"/><item><title>RISC-V 实现YOLO</title><link>https://hyy313.github.io/p/risc-v-%E5%AE%9E%E7%8E%B0yolo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hyy313.github.io/p/risc-v-%E5%AE%9E%E7%8E%B0yolo/</guid><description>参考 https://github.com/riscv/riscv-gnu-toolchain
+https://zhuanlan.zhihu.com/p/160950590
+https://zhuanlan.zhihu.com/p/258394849
+https://www.cnblogs.com/zjutzz/p/6125029.html
+https://zhuanlan.zhihu.com/p/57613816
+实验步骤 mkdir riscv-yolo cd riscv-yolo 后续都在riscv-yolo文件夹下操作！
+riscv-gnu-toolchain 安装 前提条件 ubuntu: sudo apt install autoconf automake autotools-dev curl libmpc-dev libmpfr-dev libgmp-dev \ gawk build-essential bison flex texinfo gperf libtool patchutils bc \ zlib1g-dev libexpat-dev git \ libglib2.0-dev libfdt-dev libpixman-1-dev \ libncurses5-dev libncursesw5-dev 下载源码 git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+国内受限于网络原因建议配置proxychains代理，或者用官方推荐的命令，或者用以下命令：
+git clone https://gitee.com/mirrors/riscv-gnu-toolchain cd riscv-gnu-toolchain git rm qemu git submodule update --init --recursive 编译工具链 裸机（newlib）</description></item></channel></rss>
