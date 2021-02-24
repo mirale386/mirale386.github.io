@@ -28,7 +28,7 @@ https://github.com/Dreamacro/clash/releases下载最新amd64.gz包
 gzip clash-linux-amd64-version.gz -d
 
 # 拷贝到可执行目录下
-sudo mv clash-linux-amd64-version.gz /usr/local/bin/clash
+sudo mv clash-linux-amd64-version /usr/local/bin/clash
 
 # 赋予执行权限
 sudo chmod +x /usr/local/bin/clash
@@ -123,7 +123,7 @@ rm ${HOME}/.config/clash/clash.pid
 
 给脚本添加执行权限：
 ```bash
-sudo chmod +x start-clash.sh
+sudo chmod +x stop-clash.sh
 ```
 
 4.设置
