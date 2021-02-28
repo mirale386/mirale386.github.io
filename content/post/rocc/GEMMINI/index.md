@@ -1,7 +1,7 @@
 ---
 author: mirale
 title: gemmini加速器代码介绍
-date: 2021-2-9
+date: 2021-02-09
 description: an introduction to gemmini an accelerator used rocc link to rocket
 categories:
   - riscv

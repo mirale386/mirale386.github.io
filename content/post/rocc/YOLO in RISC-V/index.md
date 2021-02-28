@@ -1,7 +1,7 @@
 ---
 author: mirale
 title: RISC-V 实现YOLO
-date: 2021-2-24
+date: 2021-02-24
 description: an paper to collect info test Yolo on RISC-V
 categories:
   - riscv
