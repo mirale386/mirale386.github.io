@@ -90,7 +90,7 @@ git clone https://git.qemu.org/git/qemu.git
 编译安装：
 
 ```
-../configure -–prefix=/opt/riscv-qemu –-target-list=riscv64-softmmu
+./configure --prefix=/opt/riscv-qemu --target-list=riscv64-softmmu
 sudo make
 sudo make install
 ```
@@ -125,7 +125,7 @@ make menuconfig
 ### Kernel
 
 - Linux Kernel： 勾选
-- RISCV64： Image
+- Kernel binary format: Image
 
 ### Filesystem images
 
@@ -136,7 +136,7 @@ make menuconfig
 
 Linux系统配置，包含主机名、root密码、shell类型和DHCP网络接口等。
 
-### Bootladers
+### Bootloaders
 
 - opensbi： qemu/virt
 
